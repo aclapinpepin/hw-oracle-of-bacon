@@ -38,11 +38,8 @@ class OracleOfBacon
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
       Net::ProtocolError => e
-      # convert all of these into a generic OracleOfBacon::NetworkError,
-      #  but keep the original error message
-      # your code here
-      byebug
-      errors.add(OracleOfBacon::NetworkError, e.message)
+
+      raise OracleOfBacon::NetworkError.new("there was a connection problem")
     end
     # your code here: create the OracleOfBacon::Response object
     @response = Response.new(xml)
